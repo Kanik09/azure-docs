@@ -3,7 +3,7 @@ title: Azure machine configuration Windows agent release notes
 description:  >-
   Details guest configuration agent for Windows release notes, issues, and frequently asked
   questions.
-ms.date:  04/13/2026
+ms.date:  06/22/2026
 ms.topic: release-notes
 ---
 
@@ -28,6 +28,79 @@ For information on release notes for the connected machine agent, see
 
 The following sections of this article detail the notes for each release of the agent. The heading
 for each section includes the specific version for that release and the date for the release.
+
+## Version 1.29.119.0 - September 2026
+
+<a id="1.29.119.0"></a>
+<a id="2026-09"></a>
+
+### Updated
+
+- Updated OpenSSL library from version 3.6.3 to 3.6.4.
+
+## Version 1.29.118.0 - September 2026
+
+<a id="1.29.118.0"></a>
+<a id="2026-09"></a>
+
+### Updated
+
+- Updated bundled PowerShell version from 7.4.15 to 7.4.19.
+- Improved configuration package download performance.
+
+### Fixed
+
+- Fixed PowerShell-based policy execution failures caused by Mark-of-the-Web metadata.
+- Strengthened configuration package integrity validation.
+
+## Version 1.29.116.0 - July 2026
+
+<a id="1.29.116.0"></a>
+<a id="2026-07"></a>
+
+### Updated
+
+- Improved baseline customization pre-installation support for PowerShell script and module files.
+
+### Fixed
+
+- Fixed an issue where Machine Configuration assignments that failed during processing were not fetched again.
+- Strengthened configuration package extraction validation.
+
+## Version 1.29.113.0 - July 2026
+
+<a id="1.29.113.0"></a>
+<a id="2026-07"></a>
+
+### New Features
+
+- Resolved TLS connection failures to HTTPS endpoints when the intermediate or root certificate isn't already in the local Windows certificate store.
+- Fixed a periodic memory spike during routine assignment-refresh checks.
+
+## Version 1.29.112.0 - July 2026
+
+<a id="1.29.112.0"></a>
+<a id="2026-07"></a>
+
+### Updated
+
+- Updated OpenSSL library from version 3.6.2 to 3.6.3.
+
+## Version 1.29.110.0 - June 2026
+
+<a id="1.29.110.0"></a>
+<a id="2026-06"></a>
+
+### Updated
+
+- Strengthened TLS certificate validation to address CVE-2026-47632.
+- Updated bundled PowerShell version from 7.4.14 to 7.4.15.
+- Improved network efficiency by avoiding repeated downloads of unchanged policy assignments.
+
+### Fixed
+
+- Improved reliability of baseline customization compliance reporting for configurations with
+  parameter values longer than `1024` characters.
 
 ## Version 1.29.108.0 - April 2026
 
@@ -108,7 +181,7 @@ for each section includes the specific version for that release and the date for
 ### New features 
 
 - Today our extension uses a maximum of 5% CPU. For cases where this needs to be configured, a
-  configuration file `cpu_config.json` can be written under the path, `/var/opt/azcmagent/`. This
+  configuration file `cpu_config.json` can be written under the path, `C:\ProgramData\AzureConnectedMachineAgent\Config`. This
   file should contain the following configuration:
 
 ```json

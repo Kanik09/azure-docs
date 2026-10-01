@@ -1,5 +1,5 @@
 ---
-title: Analyze Security Rules in Traffic Analytics (Preview)
+title: Analyze Security Rules in Traffic Analytics 
 titleSuffix: Azure Network Watcher
 description: Use Rule Impact Analyzer to simulate and assess security admin rule effects in Azure Virtual Network Manager. Ensure compliance and prevent misconfigurations.
 author: halkazwini
@@ -9,15 +9,11 @@ ms.date: 04/07/2026
 ms.topic: how-to
 ---
 
-# Analyze security rules using Rule Impact Analyzer in Traffic Analytics (preview)
+# Analyze security rules using Rule Impact Analyzer in Traffic Analytics
 
 In this article, you learn how to use the rule impact analyzer feature with network groups in the traffic analytics blade of Network Watcher. You can use the Azure portal to create a security admin configuration, add a security admin rule, and simulate the impact of your rule changes before deploying them.
 
 The rules impact analyzer enables you to preview the impact of security admin rules and network security group (NSG) rules before applying them to your environment. This feature helps you validate rule behavior, identify potential conflicts, and ensure that connectivity requirements are met without disrupting live traffic. By understanding the impact of your proposed rules changes, you can confidently plan changes, maintain compliance, and reduce the risk of misconfiguration across your virtual networks.
-
-> [!IMPORTANT]
-> Rule Impact Analyzer is currently in PREVIEW.
-> See the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/) for legal terms that apply to Azure features that are in beta, preview, or otherwise not yet released into general availability.
 
 ## Prerequisites
 
@@ -25,7 +21,7 @@ The rules impact analyzer enables you to preview the impact of security admin ru
 
 - Traffic analytics enabled for your virtual network flow logs or network security group flow logs. For more information, see [Enable traffic analytics on virtual network flow logs](vnet-flow-logs-manage.md#enable-or-disable-traffic-analytics) or [Enable traffic analytics on network security group flow logs](nsg-flow-logs-manage.md#enable-or-disable-traffic-analytics).
  
-- Required role-based access control (RBAC) permissions. For more information, see [Traffic analytics RBAC Permissions](required-rbac-permissions.md#traffic-analytics).
+- Required role-based access control (RBAC) permissions. For more information, see [Traffic analytics RBAC Permissions](rbac-permissions.md#traffic-analytics).
 
 - A network group. For more information, see [Create a network group](../virtual-network-manager/create-virtual-network-manager-portal.md#create-a-network-group).
 

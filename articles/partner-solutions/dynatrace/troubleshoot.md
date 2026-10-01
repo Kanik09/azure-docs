@@ -1,7 +1,8 @@
 ---
 title: Troubleshooting Azure Native Dynatrace Service
 description: This article provides information about troubleshooting Dynatrace for Azure 
-
+author: praveenrajap
+ms.author: praveenrajap
 ms.topic: troubleshooting-general
 ms.date: 02/02/2026
 
@@ -65,6 +66,3 @@ If logs are being emitted and diagnostic settings remain active on monitored res
 
     > [!div class="nextstepaction"]
     > [Azure portal](https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Dynatrace.Observability%2Fmonitors)
-    >
-    > [!div class="nextstepaction"]
-    > [Azure Marketplace](https://azuremarketplace.microsoft.com/marketplace/apps/dynatrace.dynatrace_portal_integration?tab=Overview)

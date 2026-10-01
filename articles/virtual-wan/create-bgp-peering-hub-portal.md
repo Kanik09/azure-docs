@@ -2,11 +2,11 @@
 title: 'Configure BGP peering to an NVA: Azure portal'
 titleSuffix: Azure Virtual WAN
 description: Learn how to create a BGP peering with Virtual WAN hub router.
-author: cherylmc
+author: duongau
 ms.service: azure-virtual-wan
 ms.topic: how-to
 ms.date: 10/30/2023
-ms.author: cherylmc
+ms.author: duau
 ms.custom: sfi-image-nochange
 
 ---
@@ -20,7 +20,7 @@ This article helps you configure an Azure Virtual WAN hub router to peer with a 
 
 Verify that you've met the following criteria before beginning your configuration:
 
-[!INCLUDE [Before you begin](../../includes/virtual-wan-before-include.md)]
+[!INCLUDE [Before you begin](../networking/includes/virtual-wan/before.md)]
 
 ## Create a virtual WAN
 
@@ -38,7 +38,7 @@ Once you have the settings configured, click **Review + Create** to validate, th
 
 After your hub router status is provisioned, create a connection between your hub and VNet.
 
-[!INCLUDE [Connect a VNet to a hub](../../includes/virtual-wan-connect-vnet-hub-include.md)]
+[!INCLUDE [Connect a VNet to a hub](../networking/includes/virtual-wan/connect-vnet-hub.md)]
 
 ## Configure a BGP peer
 

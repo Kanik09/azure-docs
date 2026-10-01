@@ -2,13 +2,15 @@
 title: Pricing for PSTN
 titleSuffix: An Azure Communication Services concept document
 description: Learn about Communication Services' Telephony Pricing Model.
-author: sadas
-ms.author: sadas
+author: henikaraa
+ms.author: henikaraa
 ms.date: 1/28/2022
 ms.topic: reference
 ms.service: azure-communication-services
 ---
 # Telephony (PSTN) pricing
+
+[!INCLUDE [Retirement and breaking changes](../includes/acs-retirement-breakingchange-callout.md)]
 
 > [!IMPORTANT]
 > Number Retention and Portability: Phone numbers that are assigned to you during any preview program may need to be returned to Microsoft if you do not meet regulatory requirements before General Availability. During private preview and public preview, telephone numbers are not eligible for porting. [Details on offers in Public Preview / GA](../concepts/numbers/sub-eligibility-number-capability.md)

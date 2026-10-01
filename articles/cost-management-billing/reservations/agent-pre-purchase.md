@@ -6,7 +6,7 @@ ms.reviewer: primittal
 ms.service: cost-management-billing
 ms.subservice: reservations
 ms.topic: how-to
-ms.date: 03/19/2026
+ms.date: 09/29/2026
 ms.author: primittal
 ---
 
@@ -18,11 +18,14 @@ Your Microsoft Agent prepurchase plan automatically uses your ACUs to pay for el
 
 *Covers Copilot Credits-enabled agentic services: Microsoft Copilot Studio, Dynamics 365 first-party agents, and Copilot. Microsoft reserves the right to update Copilot Credit-eligible products.
 
-## Services covered by Microsoft Agent prepurchase plan
+> [!NOTE]
+> Service availability varies by cloud and region. Verify that each service is available in your intended cloud and region before purchasing a plan.
 
+## Video overview
 
-:::image type="content" source="./media/agentprepurchase/services-covered-screenshot-v3.jpg" alt-text="Screenshot showing services covered by Microsoft Agent prepurchase plan." lightbox="./media/agentprepurchase/services-covered-screenshot-v3.jpg":::
+The following video provides an overview of the Microsoft Agent Pre-Purchase Plan and how it can help optimize your costs:
 
+> [!VIDEO https://www.youtube.com/embed/0-RN85uZzTY]
 
 ## Prerequisites
 
@@ -53,6 +56,9 @@ Consider a hypothetical scenario where your organization plans to use:
 - **Potential savings: $1,000 (approximately 5% discount)**
 
 This example demonstrates how the prepurchase plan can provide cost savings for organizations with predictable AI workload usage patterns.
+
+> [!NOTE]
+> Pre-purchase plan discounts don't combine with other discounts you might have. If you have additional discounts, the pre-purchase plan discount is applied independently, which may result in a lower effective discount rate than the listed tier percentage. Factor in your existing discounts when estimating savings.
 
 ## Purchase Microsoft Agent Prepurchase Plan commit units
 

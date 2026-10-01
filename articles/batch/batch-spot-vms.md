@@ -1,8 +1,9 @@
 ---
 title: Run Batch workloads on cost-effective Spot VMs
 description: Learn how to provision Spot VMs to reduce the cost of Azure Batch workloads.
+ai-usage: ai-assisted
 ms.topic: how-to
-ms.date: 04/14/2026
+ms.date: 09/16/2026
 ms.custom:
 # Customer intent: "As a cloud solutions architect, I want to deploy Batch workloads using Spot VMs, so that I can reduce costs while managing jobs with flexible completion times and efficient resource allocation."
 ---
@@ -18,6 +19,30 @@ The tradeoff for using Spot VMs is that these VMs have no SLA and no availabilit
 If a preemption occurs, the Spot compute node will be evicted and all work that wasn't appropriately checkpointed will be lost. Checkpointing is optional and is up to the Batch end-user to implement. The running Batch task that was interrupted due to preemption will be automatically requeued for execution by a different compute node. A preempted VM may later be restored by the Azure platform, but restoration is only attempted for the first 48 hours after preemption and is not guaranteed to eventually succeed.
 
 Spot VMs are offered at a reduced price compared with dedicated VMs. To learn more about pricing, see [Batch pricing](https://azure.microsoft.com/pricing/details/batch/).
+
+## Decide whether Spot VMs fit your workload
+
+Evaluate how your workload handles interruption and variable capacity before you add Spot VMs to a pool:
+
+| Workload factor | Favor Spot VMs when | Favor dedicated VMs when |
+| --- | --- | --- |
+| Task recovery | Tasks are short, restartable, or checkpoint progress to durable storage. | An interruption would lose costly work that can't be resumed. |
+| Completion time | The deadline is flexible and the workload can tolerate temporary capacity loss. | The workload needs predictable capacity or has a strict completion deadline. |
+| Workload shape | Work is distributed across many independent tasks. | The workload uses long-running, tightly coupled, multi-node MPI jobs. |
+| Capacity strategy | The pool can run with reduced capacity or use dedicated VMs as a baseline or fallback. | The workload must maintain its full target capacity. |
+
+You can combine dedicated and Spot VMs to balance cost and progress guarantees. Before you set pool targets, see [Plan for Batch capacity](batch-capacity-planning.md) to evaluate quota, regional capacity, VM availability, and fallback options.
+
+### Validate Spot savings before production
+
+Test a representative job with the planned dedicated and Spot node mix. Approve the design only after you:
+
+- In a nonproduction pool, remove a Spot node that runs a test task and set the node deallocation option to `requeue`. Verify that Batch requeues the task, the workload restores progress from durable checkpoints when applicable, and the retried task produces one correct result.
+- Run with reduced Spot capacity and verify that the dedicated baseline or fallback strategy still meets the completion deadline.
+- Measure cost per completed job, including duplicate compute, checkpoint storage, and the additional runtime caused by interruption.
+- Define an alert and owner for sustained preemption or a pool that can't reach its target, plus the condition for increasing dedicated capacity.
+
+If interruption causes unacceptable data loss, rerun time, or deadline risk, use more dedicated nodes or redesign task boundaries and checkpointing before production. A lower VM price doesn't reduce workload cost when repeated work offsets the savings.
 
 ## Batch support for Spot VMs
 
@@ -58,7 +83,7 @@ A Batch pool can contain both dedicated and Spot VMs (also referred to as comput
 
 Spot VMs might occasionally be preempted. When preemption happens, tasks that were running on the preempted node VMs are requeued and run again when capacity returns. Batch also performs the following behaviors:
 
-- The preempted VMs have their state updated to *Preempted*.
+- The preempted VMs have their state updated to *Preempted*. In some scenarios, a preempted VM may first have its state updated to *Unusable* before transitioning to *Preempted*.
 - The VM is effectively deleted, leading to loss of any data stored locally on the VM.
 - A list nodes operation on the pool still returns the preempted nodes.
 - The pool continually attempts to reach the target number of Spot nodes available. When replacement capacity is found, the nodes keep their IDs, but are reinitialized, going through *Creating* and *Starting* states before they're available for task scheduling.
@@ -68,35 +93,48 @@ Spot VMs might occasionally be preempted. When preemption happens, tasks that we
 
 The following example creates a pool using Azure virtual machines, in this case Linux VMs, with a target of 5 dedicated VMs and 20 Spot VMs:
 
-```csharp
-ImageReference imageRef = new ImageReference(
-    publisher: "Canonical",
-    offer: "ubuntu-24_04-lts",
-    sku: "server",
-    version: "latest");
+```C# Snippet:spot_vms_pool_create
+BatchImageReference imageRef = new BatchImageReference()
+{
+    Publisher = "Canonical",
+    Offer = "ubuntu-24_04-lts",
+    Sku = "server",
+    Version = "latest"
+};
 
 // Create the pool
-VirtualMachineConfiguration virtualMachineConfiguration =
-    new VirtualMachineConfiguration("batch.node.ubuntu 24.04", imageRef);
+BatchVmConfiguration vmConfiguration =
+    new BatchVmConfiguration(imageRef, "batch.node.ubuntu 24.04");
 
-pool = batchClient.PoolOperations.CreatePool(
-    poolId: "vmpool",
-    targetDedicatedComputeNodes: 5,
-    targetLowPriorityComputeNodes: 20,
-    virtualMachineSize: "Standard_D4s_v3",
-    virtualMachineConfiguration: virtualMachineConfiguration);
+BatchAccountPoolData poolData = new BatchAccountPoolData()
+{
+    VmSize = "Standard_D4s_v3",
+    DeploymentConfiguration = new BatchDeploymentConfiguration() { VmConfiguration = vmConfiguration },
+    ScaleSettings = new BatchAccountPoolScaleSettings()
+    {
+        FixedScale = new BatchAccountFixedScaleSettings()
+        {
+            TargetDedicatedNodes = 5,
+            TargetLowPriorityNodes = 20
+        }
+    }
+};
+
+await batchAccount.GetBatchAccountPools().CreateOrUpdateAsync(WaitUntil.Completed, "vmpool", poolData);
 ```
 
 You can get the current number of nodes for both dedicated and Spot VMs:
 
-```csharp
-int? numDedicated = pool1.CurrentDedicatedComputeNodes;
-int? numLowPri = pool1.CurrentLowPriorityComputeNodes;
+```C# Snippet:spot_vms_pool_node_counts
+BatchAccountPoolResource pool = await batchAccount.GetBatchAccountPools().GetAsync("vmpool");
+int? numDedicated = pool.Data.CurrentDedicatedNodes;
+int? numLowPri = pool.Data.CurrentLowPriorityNodes;
 ```
 
 Pool nodes have a property to indicate if the node is a dedicated or Spot VM:
 
-```csharp
+```C# Snippet:spot_vms_node_dedicated
+BatchNode poolNode = await batchClient.GetNodeAsync("vmpool", "tvm-1");
 bool? isNodeDedicated = poolNode.IsDedicated;
 ```
 
@@ -104,8 +142,17 @@ As with pools solely consisting of dedicated VMs, it's possible to scale a pool 
 
 The pool resize operation takes a second optional parameter that updates the value of `targetLowPriorityNodes`:
 
-```csharp
-pool.Resize(targetDedicatedComputeNodes: 0, targetLowPriorityComputeNodes: 25);
+```C# Snippet:spot_vms_pool_resize
+BatchAccountPoolData poolData = pool.Data;
+poolData.ScaleSettings = new BatchAccountPoolScaleSettings()
+{
+    FixedScale = new BatchAccountFixedScaleSettings()
+    {
+        TargetDedicatedNodes = 0,
+        TargetLowPriorityNodes = 25
+    }
+};
+await pool.UpdateAsync(poolData);
 ```
 
 ### Azure CLI

@@ -4,7 +4,7 @@ description: Discover how to use Azure Functions to host stateless MCP servers w
 author: lilyjma
 ms.author: jiayma
 ms.topic: how-to
-ms.date: 10/30/2025
+ms.date: 08/19/2026
 ms.update-cycle: 180-days
 ms.custom: 
   - ignite-2025
@@ -86,7 +86,7 @@ When you deploy an MCP SDK based server to Azure Functions, you must include a _
 > Because the payload deployed to Azure Functions is the content of the `bin/output` directory, the path to the compiled DLL is relative to that directory, _not_ to the project root. 
 
 ::: zone-end
-::: zone pivot="programming-language-java,programming-language-powershell" 
+::: zone pivot="programming-language-go,programming-language-java,programming-language-powershell"
 Example not yet available.
 ::: zone-end  
 Using a `configuration Profile` value of `mcp-custom-handler` automatically configures these Functions host settings, which are required for running your MCP server in Azure Functions: 
@@ -173,9 +173,10 @@ The ability to host your own SDK-based MCP servers in Functions is currently in 
 + [Quickstart](https://github.com/Azure-Samples/mcp-sdk-functions-hosting-dotnet)
 + [Tutorial](./functions-mcp-tutorial.md) 
 ::: zone-end  
-::: zone pivot="programming-language-java"
+::: zone pivot="programming-language-go,programming-language-java,programming-language-powershell"
 Not yet available.
 ::: zone-end 
+
 
 ## Related articles
 

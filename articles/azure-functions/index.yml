@@ -10,7 +10,7 @@ metadata:
   ms.topic: landing-page
   author: ggailey777
   ms.author: glenga
-  ms.date: 10/15/2025
+  ms.date: 09/04/2026
   ms.custom: build-2025
 landingContent:
   - title: About Azure Functions
@@ -71,10 +71,6 @@ landingContent:
         links:
           - text: AI-enabled functions
             url: functions-create-ai-enabled-apps.md
-      - linkListType: tutorial
-        links:
-          - text: Azure OpenAI for text completion
-            url: functions-add-openai-text-completion.md
       - linkListType: reference
         links:
           - text: Azure OpenAI bindings
@@ -89,6 +85,8 @@ landingContent:
             url: functions-reference.md
           - text: Azure Functions triggers and bindings concepts
             url: functions-triggers-bindings.md
+          - text: Managed connectors in Azure Functions
+            url: functions-connectors-overview.md
           - text: Code and test Azure Functions locally
             url: functions-develop-local.md
       - linkListType: sample
@@ -112,13 +110,13 @@ landingContent:
       - linkListType: concept
         links:
           - text: What are Durable Functions?
-            url: durable-functions/durable-functions-overview.md
+            url: ../durable-task/durable-functions/durable-functions-overview.md
       - linkListType: quickstart
         links:
           - text: Create a C# app 
-            url: ./durable-functions/durable-functions-isolated-create-first-csharp.md
+            url: ../durable-task/durable-functions/durable-functions-isolated-create-first-csharp.md
           - text: Create a Python app 
-            url: ./durable-functions/quickstart-python-vscode.md
+            url: ../durable-task/durable-functions/quickstart-python-vscode.md
       - linkListType: sample
         links:
           - text: Durable Functions samples 

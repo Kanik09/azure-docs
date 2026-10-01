@@ -2,10 +2,11 @@
 title: What's new in the Azure Backup service
 description: Learn about the new features in the Azure Backup service.
 ms.topic: release-notes
-ms.date: 05/04/2026
+ms.date: 09/15/2026
 ms.service: azure-backup
 ms.custom:
   - ignite-2023
+  - build-2026
 author: AbhishekMallick-MS
 ms.author: v-mallicka
 # Customer intent: "As a cloud administrator, I want to stay informed about new features and enhancements in Azure Backup, so that I can effectively manage data protection and ensure compliance within my organization's cloud infrastructure."
@@ -19,16 +20,31 @@ You can learn more about the new releases by bookmarking this page or by [subscr
 
 ## Updates summary
 
+- October 2026
+  - [Vaulted backup support for Azure PostgreSQL flexible server and elastic cluster (v2) (preview)](#vaulted-backup-support-for-azure-postgresql-flexible-server-and-elastic-cluster-v2-preview)
+- September 2026
+  - [Operational backup support for Azure Elastic SAN volume is now generally available](#operational-backup-support-for-azure-elastic-san-volume-is-now-generally-available)
+  - [Time-based immutability for Recovery Services vaults](#time-based-immutability-for-recovery-services-vaults)
+- August 2026
+  - [Auto-protection support for Azure Blob backup for up to 1,000 containers](#auto-protection-support-for-azure-blob-backup-for-up-to-1000-containers)
+  - [Auto-protection support for Azure Data Lake Storage backup for up to 1,000 containers](#auto-protection-support-for-azure-data-lake-storage-backup-for-up-to-1000-containers)
+- July 2026
+  - [Streaming backup support for SAP HANA Scale-out systems (preview)](#streaming-backup-support-for-sap-hana-scale-out-systems-preview)
+  - [HSR support for SAP HANA instance snapshot backups (preview)](#hsr-support-for-sap-hana-instance-snapshot-backups-preview)
+- June 2026
+  - [Container limit for ADLS backup has been increased from 100 to 1000](/azure/backup/azure-data-lake-storage-backup-overview)
 - May 2026
-  - [Bulk restore for Azure Virtual Machines using Azure Backup (preview)](#bulk-restore-for-azure-virtual-machines-using-azure-backup-preview)
+  - [Snapshot backup for SQL Instances in Azure VM (preview)](/azure/backup/whats-new)
+  - [Vaulted backup support for Azure Cosmos DB (preview)](/azure/backup/whats-new)
+  - [Bulk restore for Azure Virtual Machines using Azure Backup (preview)](/azure/backup/whats-new)
 - April 2026
   - [Cross-subscription backup for Azure VMs (preview)](#cross-subscription-backup-for-azure-vms-preview)
   - [Simplified CLI experience to enable backup for AKS clusters](#simplified-cli-experience-to-enable-backup-for-aks-clusters)
-- January 2026
+- February 2026
   - [Backup support for Confidential VMs (preview)](#backup-support-for-confidential-vms-preview)
 - November 2025
   - [Threat detection in Azure Backup with Microsoft Defender for Cloud integration (preview)](#threat-detection-in-azure-backup-with-microsoft-defender-for-cloud-integration-preview)
-  - [Vaulted backup support for Azure Data Lake storage is now generally available](#vaulted-backup-support-for-azure-data-lake-storage-is-now-generally-available)
+  - [Vaulted backup support for Azure Data Lake Storage is now generally available](#vaulted-backup-support-for-azure-data-lake-storage-is-now-generally-available)
 - September 2025
   - [Vaulted backup support for Azure Files (Premium) is now generally available](#vaulted-backup-support-for-azure-files-premium-is-now-generally-available)
 - July 2025
@@ -68,6 +84,95 @@ You can learn more about the new releases by bookmarking this page or by [subscr
 - January 2024
   - [Cross Region Restore support for PostgreSQL by using Azure Backup is now generally available](#cross-region-restore-support-for-postgresql-by-using-azure-backup-is-now-generally-available)
 
+## Vaulted backup support for Azure PostgreSQL flexible server and elastic cluster (v2) (preview)
+
+Azure Backup now provides vaulted backup support for Azure PostgreSQL flexible server or elastic cluster v2 through an enterprise-grade long-term retention capability, available in preview. Azure Backup creates physical backups from managed disk snapshots and stores them in an Azure Backup vault. With the v2 experience, you can protect larger servers, configure more frequent vaulted backups, and use incremental backups after the first full backup. You can restore directly to a precreated target server without manual file import. You can also protect elastic clusters alongside flexible servers.
+
+Key features include:
+
+- Protects both Azure PostgreSQL flexible server and elastic cluster.
+- Supports servers up to 32 TB on Premium SSD v1 and up to 64 TB on Premium SSD v2.
+- Supports daily and weekly backup schedules, with a recovery point objective (RPO) of one day.
+- Creates incremental backups after the first full backup, which allows daily protection at multiterabyte scale.
+- Supports Restore as Server, which restores a recovery point directly to a precreated target server with no intermediate storage account.
+- Supports retention from 7 days up to 10 years, with independent retention rules for daily, weekly, monthly, and yearly recovery points.
+- Supports WORM immutable backups, to prevent modification or deletion of recovery points before their retention period expires.
+
+For more information, see [About Azure PostgreSQL flexible server and elastic cluster vaulted backup (v2) (preview)](backup-azure-postgresql-flex-server-elastic-cluster-v2-overview.md). 
+
+## Operational backup support for Azure Elastic SAN volume is now generally available
+
+Azure Backup now allows you to securely configure operational backup and restore for Azure Elastic SAN volumes through an Azure Backup vault, ensuring seamless data protection. This fully managed operational backup solution allows you to schedule backups, set expiration timelines for restore points, and restore data to a new volume.
+
+Key features include:
+
+- Protects against accidental deletions, ransomware attacks, and application updates.
+- Protects Azure Elastic SAN volumes (as per the schedules - daily or weekly) by creating managed disk incremental snapshots that use locally redundant storage (LRS) for resiliency. [Learn more](azure-elastic-san-backup-support-matrix.md#supported-and-unsupported-scenarios-for-azure-elastic-san-volume-operational-backup).
+- Stores up to **450** recovery points, which allows you to customize daily or weekly schedules to align your backup strategy with business continuity and compliance needs.
+- Supports Elastic SAN volumes size of up to 16 TB.
+
+For more information, see [Azure Elastic SAN volume operational backup](azure-elastic-san-backup-overview.md).
+
+## Time-based immutability for Recovery Services vaults
+
+Azure Backup now supports time-based immutability for Recovery Services vaults, so you can configure immutability for a specific duration that's independent of the backup policy retention period. Recovery points stay immutable for the duration you set and continue to be retained according to the backup policy. This feature prevents backup policy retention from being shorter than the immutability duration you set. It provides greater flexibility to balance data protection requirements with storage costs, especially when immutability is locked.
+
+For more information, see [Immutable vault for Azure Backup](backup-azure-immutable-vault-concept.md#immutability-enablement-options).
+
+## Auto-protection support for Azure Blob backup for up to 1,000 containers
+
+Azure Backup now supports auto-protection for Azure Blob backup for up to 1,000 containers in a storage account. By using auto-protection, you can configure backup for all present and future containers in a storage account without selecting each container individually.
+
+For more information, see [Configure Azure Blob backup](blob-backup-configure-manage.md#configure-backups).
+
+## Auto-protection support for Azure Data Lake Storage backup for up to 1,000 containers
+
+Azure Backup now supports auto-protection for Azure Data Lake Storage backup for up to 1,000 containers in a storage account. By using auto-protection, you can configure backup for all present and future containers in a storage account without selecting each container individually.
+
+For more information, see [Configure vaulted backup for Azure Data Lake Storage](azure-data-lake-storage-configure-backup.md#configure-vaulted-backup-for-the-azure-data-lake-storage).
+
+## Streaming backup support for SAP HANA Scale-out systems (preview)
+
+Azure Backup now supports streaming backups for SAP HANA Scale-out systems (preview), where a single HANA system is distributed across multiple nodes. This support includes Full, Differential, Incremental, and Log backups with a unified backup chain across nodes.
+
+For more information, see [Back up SAP HANA Scale-out databases on Azure VMs](sap-hana-database-scale-out-backup.md) and [SAP HANA Backup support matrix](sap-hana-backup-support-matrix.md).
+
+## HSR support for SAP HANA instance snapshot backups (preview)
+
+Azure Backup now supports SAP HANA instance snapshot backups for HANA System Replication (HSR) environments (preview). This capability lets you protect HSR-enabled SAP HANA systems with HANA-consistent instance snapshots while continuing to use Backint-based full and log backups for long-term retention and point-in-time recovery.
+
+For more information, see:
+
+- [Back up SAP HANA System Replication databases on Azure VMs using Azure portal](sap-hana-database-with-hana-system-replication-backup.md#sap-hana-hsr-snapshot-backup-behavior-and-configuration)
+- [Back up SAP HANA database instance snapshots on Azure VMs](sap-hana-database-instances-backup.md)
+- [Support matrix for backup of SAP HANA databases on Azure VMs](sap-hana-backup-support-matrix.md)
+
+## Snapshot backup for SQL Instances in Azure VM (preview)
+
+Azure Backup now supports snapshot-based backups for SQL Server instances in Azure virtual machines (preview). This capability combines fast, disk-based snapshots with frequent log backups to deliver faster restores (improved [Recovery Time Objective](azure-backup-glossary.md#recovery-time-objective-rto)) and minimal data loss (low [Recovery Point Objective](azure-backup-glossary.md#recovery-point-objective-rpo)) for large SQL databases. 
+
+This feature includes:
+
+- **Instance level snapshots**: Backs up multiple databases together at the SQL Server instance level and restores the entire instance or individual databases as required.
+- **Minimal impact on the source server**: Captures application consistent snapshots with minimal database quiesce time that lasts only a few seconds, unlike resource intensive streaming backups.
+- **Cost efficient protection**: Optimizes storage cost with incremental snapshots.
+- **Improved Recovery Time Objective (RTO)**: Performs faster restores from snapshots retained within the user subscription. This capability also provides secure, long‑term retention in the Recovery Services vault.
+- **Low Recovery Point Objective (RPO)**: Applies frequent log backups (every 15 minutes) to snapshots during restore for point in time recovery.
+
+For more information, see [Back up SQL Server instance snapshots (preview)](backup-azure-sql-database.md#snapshot-backup-for-sql-instances-in-azure-vm-preview).
+
+## Vaulted backup support for Azure Cosmos DB (preview)
+
+Azure Backup now supports vaulted backups for Azure Cosmos DB (preview). You can protect Azure Cosmos DB accounts by using a Backup vault. Azure Backup stores backups in an isolated, off-site vault that strengthens cyber resilience and supports compliance. This approach protects backups from accidental deletion, malicious activity, and ransomware.
+
+Key benefits include:
+- **Policy-based scheduled backups:** Defines and manages backup schedules and long-term retention (up to 10 years) for Azure Cosmos DB by using Azure Backup policies.
+- **Built-in security protections:** Protects backups with encryption, soft delete, immutability, and role-based access control.
+
+   >[!Note]
+   >Pricing is effective from 1 July 2026. Learn about the [Azure Backup pricing](https://azure.microsoft.com/pricing/details/backup/) and [pricing calculator](https://azure.microsoft.com/pricing/calculator/) to understand the Azure Cosmos DB backup pricing.
+
+For more information, see [About Azure Cosmos DB vaulted backup (preview)](backup-azure-cosmos-db-overview.md).
 
 ## Bulk restore for Azure Virtual Machines using Azure Backup (preview)
 
@@ -111,7 +216,7 @@ Azure Backup now integrates with Microsoft Defender for Cloud to deliver advance
 
 For more information, see [About Threat Detection for Azure VM Backups (preview)](threat-detection-overview.md).
 
-## Vaulted backup support for Azure Data Lake storage is now generally available 
+## Vaulted backup support for Azure Data Lake Storage is now generally available
 
 Azure Backup allows you to create vaulted backups for [hierarchical namespace](../storage/blobs/data-lake-storage-namespace.md)-enabled storage accounts, which protect your data from ransomware attacks and malicious or accidental deletions. You can define backup schedules to generate recovery points and set retention policies to keep backups in the vault for up to **10 years**.
 
@@ -154,12 +259,12 @@ Key features include:
 
 - Protects against accidental deletions, ransomware attacks, and application updates.
 - Captures Elastic SAN volumes at specific points in time as independent managed disk incremental snapshots with Locally redundant storage (LRS) resiliency.
-- Stores up to **450** recovery points, which allows you customize **daily** or **weekly** schedules to align your backup strategy with business continuity and compliance needs.
+- Stores up to **450** recovery points, which allows you to customize **daily** or **weekly** schedules to align your backup strategy with business continuity and compliance needs.
 
 >[!Note]
 >This feature is in preview and [available in specific Azure regions](azure-elastic-storage-area-network-backup-support-matrix.md#supported-regions).
 
-For more information, see [About Azure Elastic SAN backup (preview)](azure-elastic-storage-area-network-backup-overview.md).
+For more information, see [About Azure Elastic SAN backup (preview)](azure-elastic-san-backup-overview.md).
 
 ## Vaulted Backups for Azure Database for PostgreSQL – flexible server is now generally available
 
@@ -168,7 +273,7 @@ Azure Backup now supports vaulted backup for PostgreSQL Flexible Server across a
 **Key Features include**:
 
 - **Policy-based scheduled backups**: Eliminates manual intervention and increases efficiency.
-- **Long-term retention**: Ensures long-term retention of backups upto 10 years for regulatory and compliance requirements.
+- **Long-term retention**: Ensures long-term retention of backups up to 10 years for regulatory and compliance requirements.
 - **Cyber resiliency**: Protects from ransomware threats with immutability and role-based access control.
  
 You can  also use Azure [Business Continuity Center](https://ms.portal.azure.com/#view/Microsoft_Azure_BCDRCenter/AbcCenterMenuBlade/~/overview) to manage the vaulted backup operations.
@@ -233,7 +338,7 @@ For more information, see [Secure by Default with Azure Backup (Preview)](secure
 
 Azure Backup now provides immutable WORM storage for your backups when immutability is enabled and locked on a Recovery Services vault. When immutability is enabled, Azure Backup ensures that a Recovery Point, once created, can't be deleted or have  its retention period reduced before its intended expiry. 
 
-When immutability is locked, Azure Backup also uses WORM-enabled immutable storage to meet any compliance requirements. This feature is applicable to both existing and new vaults with locked immutability. WORM immutability is available in [these regions](backup-azure-immutable-vault-concept.md#supported-scenarios-for-worm-storage). 
+When you lock immutability, Azure Backup also uses WORM-enabled immutable storage to meet any compliance requirements. This feature applies to both existing and new vaults with locked immutability. WORM immutability is available in [these regions](backup-azure-immutable-vault-concept.md#worm-storage-support). 
 
 For more information, see [About Immutable vault for Azure Backup](backup-azure-immutable-vault-concept.md).
 

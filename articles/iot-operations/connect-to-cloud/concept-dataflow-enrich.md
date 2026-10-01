@@ -5,7 +5,7 @@ author: dominicbetts
 ms.author: dobett
 ms.subservice: azure-data-flows
 ms.topic: concept-article
-ms.date: 11/13/2024
+ms.date: 05/18/2026
 
 #CustomerIntent: As an operator, I want to understand how to create a data flow to enrich data sent to endpoints.
 ms.service: azure-iot-operations
@@ -14,7 +14,7 @@ ms.service: azure-iot-operations
 # Enrich data by using data flows
 
 > [!TIP]
-> Data flow graphs support enrichment with expanded capabilities including enrichment in filter and branch transforms. For new projects that use MQTT, Kafka, or OpenTelemetry endpoints, see [Enrich with external data in data flow graphs](howto-dataflow-graphs-enrich.md).
+> Data flow graphs support enrichment with expanded capabilities, including enrichment in filter and branch transform, and trigger rules for window transforms, which require version 1.1 or later. For new projects that use MQTT, Kafka, or OpenTelemetry endpoints, see [Enrich with external data in data flow graphs](howto-dataflow-graphs-enrich.md).
 
 You can enrich data by using the *contextualization datasets* function. When incoming records are processed, you can query these datasets based on conditions that relate to the fields of the incoming record. This capability allows for dynamic interactions. Data from these datasets can be used to supplement information in the output fields and participate in complex calculations during the mapping process.
 
@@ -167,12 +167,12 @@ inputs: [
 ```yaml
 - inputs:
   - $context(position).WorkingHours  #    - - $1
-  - $context(permission).NightShift  #    - - $2
+  - $context(permissions).NightShift  #    - - $2
 ```
 
 ---
 
-The input references use the key of the dataset like `position` or `permission`. If the key in state store is inconvenient to use, you can define an alias:
+The input references use the key of the dataset like `position` or `permissions`. If the key in state store is inconvenient to use, you can define an alias:
 
 # [Bicep](#tab/bicep)
 

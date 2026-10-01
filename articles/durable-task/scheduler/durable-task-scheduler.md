@@ -18,7 +18,7 @@ The Durable Task Scheduler provides durable execution in Azure. Durable executio
 - Data processing
 - Infrastructure management
 
-Durable Task Scheduler is the recommended storage provider for [Durable Functions](../../azure-functions/durable-functions/durable-functions-overview.md) and [the Durable Task SDKs](../sdks/durable-task-overview.md). 
+Durable Task Scheduler is the recommended storage provider for [Durable Functions](../durable-functions/durable-functions-overview.md) and [the Durable Task SDKs](../sdks/durable-task-overview.md). 
 
 ## Supported SKUs
 
@@ -42,7 +42,7 @@ Consider using the same region for your Durable Functions app and the Durable Ta
 
 ## Orchestration frameworks
 
-Durable Task Scheduler works with both [Durable Functions](../../azure-functions/durable-functions/durable-functions-overview.md) and [the Durable Task SDKs](../sdks/durable-task-overview.md). [Choose which framework works best for your project.](../common/choose-orchestration-framework.md)
+Durable Task Scheduler works with both [Durable Functions](../durable-functions/durable-functions-overview.md) and [the Durable Task SDKs](../sdks/durable-task-overview.md). [Choose which framework works best for your project.](../common/choose-orchestration-framework.md)
 
 ## Architecture
 
@@ -152,7 +152,7 @@ Stale orchestration data should be purged periodically to ensure efficient stora
     You're limited in how many task hubs you can use depending on your billing SKU. 
 
      - [When using the Dedicated SKU,](./durable-task-scheduler-billing.md#dedicated-sku-pricing-and-capacity) task hubs are limited to **25** per region per subscription. 
-     - [When using the Consumption SKU,](./durable-task-scheduler-billing.md#consumption-sku) task hubs are limited to **five** per region per subscription. 
+     - [When using the Consumption SKU,](./durable-task-scheduler-billing.md#consumption-sku) task hubs are limited to **five** per scheduler. 
 
     For more quota, [contact support](https://github.com/Azure/azure-functions-durable-extension/issues).
 

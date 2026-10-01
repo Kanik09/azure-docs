@@ -4,7 +4,7 @@ description: "Learn how to use the Azure Developer CLI (azd) to create resources
 ms.date: 05/01/2026
 ms.topic: quickstart
 ai-usage: ai-assisted
-zone_pivot_groups: programming-languages-set-functions
+zone_pivot_groups: programming-languages-set-functions-no-go
 #Customer intent: As a developer, I need to know how to use the Azure Developer CLI to create and deploy an Event Hubs triggered function for real-time event processing to a new function app in the Flex Consumption plan in Azure.
 ---
 
@@ -36,7 +36,7 @@ This article supports version 2 of the Python programming model for Azure Functi
 + [Node.js 22](https://nodejs.org/) or later  
 ::: zone-end  
 ::: zone pivot="programming-language-powershell"  
-+ [PowerShell 7.4](/powershell/scripting/install/installing-powershell-core-on-windows)
++ [PowerShell 7.6](/powershell/scripting/install/installing-powershell)
 ::: zone-end  
 ::: zone pivot="programming-language-python" 
 + [Python 3.11](https://www.python.org/) or later
@@ -301,6 +301,7 @@ You can review the complete template project [here](https://github.com/Azure-Sam
 
 You can review the complete template project [here](https://github.com/Azure-Samples/functions-quickstart-python-azd-eventhub).
 ::: zone-end  
+
 
 After you verify your function locally, it's time to publish it to Azure. 
 

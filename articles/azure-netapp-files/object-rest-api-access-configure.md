@@ -9,56 +9,12 @@ ms.date: 02/16/2026
 ms.author: anfdocs
 ---
 
-# Configure object REST API for Azure NetApp Files (preview)
+# Configure object REST API in Azure NetApp Files
 
 Azure NetApp Files supports access to objects with the [object REST API](object-rest-api-introduction.md) feature. With the object REST API, you can connect to services such as Azure AI Search, Microsoft Fabric, Microsoft Foundry, Azure Databricks, OneLake, and other S3‑compatible clients.
 
 This article describes how to configure object REST API access and walks you through the two supported certificate workflows. Choose the workflow that best matches your security and operational requirements.
 
-## Register the feature
-
-The object REST API feature in Azure NetApp Files is currently in preview. You need to register the feature before using it for the first time.  
-
-# [Azure CLI](#tab/azurecli)
-
-1. Register the feature: 
-
-    ```azurecli
-    az account set --subscription <subscriptionId>
-    az feature register --namespace Microsoft.NetApp --name ANFObjectRestApi 
-    ```
-
-2. Check the status of the feature registration: 
-
-    > [!NOTE]
-    > The **RegistrationState** may be in the `Registering` state for up to 60 minutes before changing to`Registered`. Wait until the status is **Registered** before continuing.
-
-    ```azurecli
-    az feature show --namespace Microsoft.NetApp --name ANFObjectRestApi 
-    ```
-
-You can also use [Azure CLI commands](/cli/azure/feature) `az feature register` and `az feature show` to register the feature and display the registration status.
-
-# [Azure PowerShell](#tab/azurepowershell)
-
-1.  Register the feature by running the following commands:
-
-    ```azurepowershell
-    Set-AzContext -SubscriptionId <subscriptionId>
-    Register-AzProviderFeature -ProviderNamespace Microsoft.NetApp -FeatureName ANFObjectRestApi
-    ```
-
-2. Check the status of the feature registration: 
-
-    > [!NOTE]
-    > The **RegistrationState** may be in the `Registering` state for up to 60 minutes before changing to `Registered`. Wait until the status is `Registered` before continuing.
-
-    ```azurepowershell
-    Get-AzProviderFeature -ProviderNamespace Microsoft.NetApp -FeatureName ANFObjectRestApi
-    ```
-You can also use [Azure CLI commands](/cli/azure/feature) `az feature register` and `az feature show` to register the feature and display the registration status. 
-
----
 
 ## Create the self-signed certificate
 
@@ -143,6 +99,9 @@ openssl req -new -key $KEY_DIR/server-key.pem -out $CERT_DIR/server-req.pem -sub
 # Generate self-signed certificate 
 openssl x509 -req -days $CERT_DAYS -in $CERT_DIR/server-req.pem -signkey $KEY_DIR/server-key.pem -out $CERT_DIR/server-cert.pem 
 
+# Combining private key and permissions
+cat ./private/server-key.pem server-cert.pem > server-combined.pem
+
 echo "Self-signed certificate created at $CERT_DIR/server-cert.pem"
 ```
 After the certificate is created, you will need to create a bucket.
@@ -152,7 +111,7 @@ After the certificate is created, you will need to create a bucket.
 To enable object REST API, you must create a bucket on an Azure NetApp Files volume. 
 
 1. From your NetApp volume, select **Buckets**. 
-1. Select **+Create or update bucket**. 
+1. Select **+ Create bucket**. 
 1. In Create or update bucket, provide the following information for the bucket:
 
     **Bucket configuration**
@@ -163,6 +122,9 @@ To enable object REST API, you must create a bucket on an Azure NetApp Files vol
     * **Path**
 
         The subdirectory path for object REST API. For full volume access, leave this field blank or use `/` for the root directory.
+
+      > [!IMPORTANT]
+      > The specified directory must already exist on the volume. If it doesn’t exist, bucket creation fails.
         
     **Protocol access**
 
@@ -188,7 +150,23 @@ To enable object REST API, you must create a bucket on an Azure NetApp Files vol
 
     :::image type="content" source="./media/object-rest-api-access-configure/create-bucket.png" alt-text="Screenshot of create a bucket menu." lightbox="./media/object-rest-api-access-configure/create-bucket.png":::
 
-1. Select **Save**. 
+    * **Credentials storage**
+
+        * **Azure Key Vault**
+
+            * **Vault URI**
+
+                Select the name from the drop-down list.
+
+            * **Secret name**
+
+                Enter the name of the secret. The secret name is user-defined and can be any value that meets the naming guidelines. 
+            
+        * **Access key**
+
+            When you select this option, the portal generates access keys after the bucket is created and displays them once in the Azure portal. You must manually copy both these values and store them securely.
+
+1. Select **Create**. 
 
     Additional details are needed to create the first bucket on a set of volumes sharing the same IP address.
     
@@ -206,7 +184,7 @@ To enable object REST API, you must create a bucket on an Azure NetApp Files vol
 
             Select the name from the drop-down list.
 
-        * **Secret name**
+        * **Certificate name**
 
             Enter the name of the certificate.
            
@@ -219,22 +197,6 @@ To enable object REST API, you must create a bucket on an Azure NetApp Files vol
         * **Certificate source**. 
 
             Upload the appropriate certificate. Only PEM files are supported.
-                     
-    **Credentials storage**
-
-    * **Azure Key Vault**
-
-        * **Vault URI**
-
-            Select the name from the drop-down list.
-
-        * **Secret name**
-
-            Enter the name of the secret. The secret name is user-defined and can be any value, that meets the naming guidelines. 
-            
-    * **Access key**
-
-        When selecting this option, access keys are generated after the bucket is created and are displayed once in the Azure portal. You must manually copy both these values and store them securely.
 
 1. Select **Save** to validate the configuration.
 
@@ -294,10 +256,12 @@ You can modify a bucket's access management settings.
 * Permissions
 
 1. From your NetApp volume, select **Buckets**.
-1.	Select **+Create or update bucket**.
-1.	Enter the name of the bucket you want to modify.
-1.	Change the access management settings as required.
-1.	Click **Save** to modify the existing bucket.
+1. Select the ellipses (...) in the **Actions** column of the bucket you want to modify, and then select **Edit**.
+
+    :::image type="content" source="./media/object-rest-api-access-configure/update-bucket.png" alt-text="Screenshot to update a bucket menu." lightbox="./media/object-rest-api-access-configure/update-bucket.png":::        
+
+1. Change the access management settings as needed.
+1. Select **Save** to modify the existing bucket.
 
 > [!NOTE]
 > You cannot modify a bucket’s path. To update a bucket’s path, delete and re-create the bucket with the new path.

@@ -14,6 +14,8 @@ ms.subservice: data
 
 # SMS logs
 
+[!INCLUDE [Retirement and breaking changes](../../../includes/acs-retirement-breakingchange-callout.md)]
+
 Azure Communication Services provides logging capabilities you can use to monitor and debug your Communication Services solution. You can configure these capabilities through the Azure portal.
 
 > [!IMPORTANT]
@@ -32,7 +34,7 @@ Each Azure resource requires its own diagnostic setting, which defines the follo
 Complete these instructions to configure your Azure Monitor resource to start creating logs and metrics for your Communications Services. For detailed documentation about using Diagnostic Settings across all Azure resources, see: [Enable logging in Diagnostic Settings](../enable-logging.md).
 
 > [!NOTE]
-> T to enable the logs for SMS, under diagnostic setting name select **SMS Operational**.
+> To enable the logs for SMS, under diagnostic setting name select **SMS Operational**.
 
 ## **Overview**
 

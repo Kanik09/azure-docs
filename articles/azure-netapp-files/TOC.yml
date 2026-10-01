@@ -55,6 +55,8 @@
           href: kerberos.md 
         - name: Understand Active Directory Domain Services and guidelines for site design and planning
           href: understand-guidelines-active-directory-domain-service-site.md
+        - name: Understand Microsoft Entra ID hybrid and cloud-only identities
+          href: understand-entra-id.md
         - name: Understand LDAP
           items:
           - name: Understand LDAP basics
@@ -295,6 +297,10 @@
         href: control-plane-security.md
       - name: Understand data encryption in Azure NetApp Files
         href: understand-data-encryption.md
+      - name: Understand AES in Azure NetApp Files
+        href: understand-advanced-encryption-standard.md  
+      - name: Understand double encryption at rest
+        href: double-encryption-at-rest.md    
     - name: Security baseline
       href: /security/benchmark/azure/baselines/azure-netapp-files-security-baseline?toc=/azure/azure-netapp-files/TOC.json
   - name: Solutions and benefits
@@ -359,6 +365,10 @@
         href: configure-ldap-over-tls.md
       - name: Join a Linux VM to an Active Directory Domain
         href: join-active-directory-domain.md
+    - name: Manage Entra ID 
+      items:
+      - name: Manage Microsoft Entra Kerberos authentication 
+        href: configure-entra-kerberos-authentication-for-hybrid-cloud-identities.md
     - name: Manage capacity pools
       items:
       - name: Set up a capacity pool
@@ -485,6 +495,8 @@
       href: application-volume-group-delete.md  
   - name: Manage hybrid data mobility and protection  
     items:
+    - name: Manage data restores
+      href: azure-netapp-files-manage-data-restores.md
     - name: Manage snapshot-based protection 
       items:
       - name: Create an on-demand snapshot
@@ -549,6 +561,12 @@
       items: 
         - name: Manage cache volumes 
           href: configure-cache-volumes.md
+        - name: Change the service level of an Azure NetApp Files cache volume
+          href: change-cache-volume-service-level.md
+        - name: Break file locks for an Azure NetApp Files cache volume 
+          href: break-file-locks-cache-volume.md
+        - name: Reset SMB password for an Azure NetApp Files cache volume
+          href: reset-password-cache-volumes.md
     - name: Manage ransomware protection 
       items: 
       - name: Manage advanced ransomware protection 
@@ -561,6 +579,8 @@
     items:
     - name: REST API
       href: azure-netapp-files-develop-with-rest-api.md
+    - name: API 2026-07-01 update
+      href: api-2026-07-01-update.md
     - name: REST API using PowerShell
       href: develop-rest-api-powershell.md
     - name: SDKs, CLI tools, and ARM templates
@@ -587,6 +607,12 @@
       href: troubleshoot-user-access-ldap.md
     - name: Troubleshoot file locks
       href: troubleshoot-file-locks.md
+    - name: Troubleshoot Microsoft Entra Kerberos authentication 
+      href: troubleshoot-entra-kerberos-authentication.md
+    - name: Troubleshoot SMB authentication and CIFS password reset failures
+      href: troubleshoot-authentication-password-reset-failure.md
+    - name: Troubleshoot latency issues
+      href: troubleshoot-latency-issues.md
 - name: FAQs
   items:
   - name: Networking FAQs
@@ -613,6 +639,8 @@
     href: faq-security.md
   - name: Integration FAQs
     href: faq-integration.md
+  - name: AES FAQs
+    href: faq-advanced-encryption-standard.md  
 - name: Reference
   items:
   - name: REST

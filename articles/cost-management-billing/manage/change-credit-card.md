@@ -6,7 +6,7 @@ ms.reviewer: souchak
 ms.service: cost-management-billing
 ms.subservice: billing
 ms.topic: how-to
-ms.date: 03/12/2026
+ms.date: 09/16/2026
 ms.author: souchak
 ms.custom:
 - references_regions
@@ -31,6 +31,7 @@ Most countries/regions accept credit cards and debit cards. Here's some specific
 
 - Hong Kong Special Administrative Region and Brazil support only credit cards.
 - India supports credit and debit cards through Visa and Mastercard.
+- China supports credit cards through UnionPay, Visa, and Mastercard.
 
 The Reserve Bank of India has a [regulation for storing credit card information](https://rbi.org.in/Scripts/BS_CircularIndexDisplay.aspx?Id=12159) that might affect credit card users in India. To summarize, customers in India can't store credit card information in Azure for recurring charges. Instead, they must enter their credit card information each time they want to pay for Azure services. For more information, see [Reserve Bank of India](../understand/pay-bill.md#reserve-bank-of-india).
 
@@ -46,6 +47,10 @@ If you get an error after you add a credit card, see [Troubleshoot a declined ca
 ## Manage pay-as-you-go credit cards
 
 The following sections apply to customers who have a Microsoft Online Subscription Program billing account. You can [check your billing account type](#check-the-type-of-your-account). If your billing account type is Microsoft Online Subscription Program, payment methods are associated with individual Azure subscriptions.
+
+> [!NOTE]
+> Only the Account owner can manage the payment instrument for Microsoft Online Subscription Program pay-as-you-go subscriptions.
+> - If you need to allow another user to manage the payment instrument, you will need to transfer the subscription to the user. Find out more about subscription transfer [here](billing-subscription-transfer.md).
 
 ### Change the credit card for all subscriptions by adding a new credit card
 

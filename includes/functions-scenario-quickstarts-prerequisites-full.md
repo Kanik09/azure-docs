@@ -26,12 +26,12 @@ ms.author: glenga
 + The [Java extension pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)       
 ::: zone-end  
 ::: zone pivot="programming-language-typescript"  
-+ [Node.js 18.x](https://nodejs.org/en/about/previous-releases) or above. Use the `node --version` command to check your version.
++ [Node.js 22.x](https://nodejs.org/en/about/previous-releases) or above. Use the `node --version` command to check your version.
 ::: zone-end 
 ::: zone pivot="programming-language-powershell"  
-+ [PowerShell 7.2](/powershell/scripting/install/installing-powershell-core-on-windows)
++ [PowerShell 7.6](/powershell/scripting/install/installing-powershell)
 
-+ [.NET 6.0 runtime](https://dotnet.microsoft.com/download/dotnet)     
++ [.NET 10 runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 + The [PowerShell extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell).  
 ::: zone-end

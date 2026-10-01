@@ -2,11 +2,11 @@
  title: include file
  description: include file
  services: firewall
- author: vhorne
+ author: duongau
  ms.service: azure-firewall
  ms.topic: include
  ms.date: 07/10/2024
- ms.author: victorh
+ ms.author: duau
  ms.custom: include file
 ---
 
@@ -14,9 +14,10 @@
 | --- | --- |
 | Azure Firewalls per virtual network | 1 |
 | Max Data throughput | 100 Gbps for Premium, 30 Gbps for Standard, 250 Mbps for Basic (preview) SKU<br><br> For more information, see [Azure Firewall performance](../articles/firewall/firewall-performance.md#performance-data). |
-|Rule limits|20,000 unique source/destinations in network rules <br><br> **Unique source/destinations in network** = (Source addresses + Source IP Groups) * (Destination addresses + Destination Fqdn count + Destination IP Groups) * (IP protocols count) * (Destination ports)<br><br>You can track the Firewall Policy network rule count in the [policy analytics](../articles/firewall/policy-analytics.md) under the **Insights** tab. As a proxy, you can also monitor your Firewall Latency Probe metrics to ensure it stays within 20 ms even during peak hours.|
+| Rule limits | 20,000 unique source-destination combinations in network rules <br><br> **Unique source-destination combinations in network rules** = (number of IP protocols) × (number of source IP addresses) × (number of destination IP addresses) × (number of destination ports ÷ 14, rounded up to the nearest whole number)<br><br>You can track the Firewall Policy network rule count in the [policy analytics](../articles/firewall/policy-analytics.md) under the **Insights** tab. As a proxy, you can also monitor your Firewall Latency Probe metrics to ensure it stays within 20 ms even during peak hours. |
 |Total size of rules within a single Rule Collection Group| 1 MB for Firewall policies created before July 2022<br>2 MB for Firewall policies created after July 2022|
 |Number of Rule Collection Groups in a firewall policy|50 for Firewall policies created before July 2022<br>90 for Firewall policies created after July 2022|
+|Number of firewalls referenced by a single firewall policy|50|
 |Maximum DNAT rules (Maximum external destinations)|250 maximum [number of firewall public IP addresses + unique destinations (destination address, port, and protocol)]<br><br> The DNAT limitation is due to the underlying platform.<br><br>For example, you can configure 500 UDP rules to the same destination IP address and port (one unique destination), while 500 rules to the same IP address but to 500 different ports exceeds the limit (500 unique destinations).<br><br>If you need more than 250, you'll need to add another firewall in a separate virtual network|
 |Minimum AzureFirewallSubnet size |/26|
 |Port range in network and application rules|1 - 65535|

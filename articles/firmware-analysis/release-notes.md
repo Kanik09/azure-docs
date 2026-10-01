@@ -3,8 +3,8 @@ title: What's new in firmware analysis
 author: karengu0
 ms.author: karenguo
 description: Learn about the latest updates for firmware analysis.
-ms.topic: conceptual
-ms.date: 03/05/2026
+ms.topic: concept-article
+ms.date: 09/21/2026
 ms.service: azure
 ms.subservice: azure-firmware-analysis
 ---
@@ -16,6 +16,38 @@ Get notified about when to revisit this page for updates by copying and pasting 
 
 > `https://learn.microsoft.com/api/search/rss?search=%22What%27s+new+in+firmware+analysis%22&locale=en-us`
 
+## September 21, 2026
+
+- **Unsafe function calls analysis (preview)**: Firmware analysis now identifies references to potentially unsafe functions in supported ELF user-space executables. The preview supports AMD64 or x86-64, ARM64 or AArch64, and ARM32.
+
+  Results are security-review signals and don't establish that an executable is vulnerable. Static or stripped binaries, unsupported architectures, and Linux kernel modules might not produce results. To receive unsafe function call analysis, upload again firmware images analyzed before this feature became available. For more information, see [Understand unsafe function call data in firmware analysis](understand-unsafe-function-calls.md).
+
+- **Azure Device Registry integration namespace grouping**: ADR data in firmware analysis now groups device results based on ADR name space's and enables improved navigation cross integration.
+
+## July 28, 2026
+
+- **SBOM component expansion**: Firmware analysis now supports detection of 20 more SBOM components: bridge-utils, conntrack-tools, ebtables, eeprog, ethtool, exfat, hdparm, i2c-tools, ipset, libcap, lspci, mtd-utils, procps, rngd, rngtest, setserial, strace, zip, zipcloak, and zipnote. This expansion further improves SBOM coverage across firmware images and enhances visibility into potential vulnerabilities.
+
+- **Updated CVE database**: Firmware analysis's CVE database was refreshed on July 17, 2026 to incorporate newer CVE data, including added coverage for nano and protobuf-c.
+
+- **Fixed strace version detection**: Corrected the strace version detection regex, ensuring vulnerabilities are accurately identified and reported.
+
+
+
+## July 7, 2026
+
+- **SBOM component expansion**: Firmware analysis now supports detection of four additional SBOM components: nano, libarchive, protobuf-c, and jansson. This expansion improves SBOM coverage across firmware images and enhances visibility into potential vulnerabilities.
+
+- **Fixed extraction crash on large tarball entries**: Resolved a crash (ValueError overflow) during firmware extraction when device files exceed USTAR field limits. This fix improves the reliability of analysis results.
+
+- **Fixed UBIFS extraction for multi-image files**: Resolved an issue extracting images that contain multiple UBIFS images embedded in a single file separated by padding.
+
+- **Updated CVE database**: Firmware analysis's CVE database was refreshed on June 17, 2026 to incorporate newer CVE data.
+
+
+## May 2026
+
+- **SBOM component expansion**: Firmware analysis now supports detection of five additional SBOM components: iperf3, libxml2, json-c, chrony, and iproute2. This expands SBOM coverage across firmware images and improves visibility into potential vulnerabilities.
 
 
 ## April 2026

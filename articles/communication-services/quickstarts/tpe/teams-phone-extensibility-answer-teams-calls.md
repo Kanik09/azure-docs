@@ -14,6 +14,8 @@ ms.subservice: identity
 
 # Answer Teams Phone calls from Call Automation
 
+[!INCLUDE [Retirement and breaking changes](../../includes/acs-retirement-breakingchange-callout.md)]
+
 Use Azure Communication Services Call Automation to receive and answer calls for a Teams resource account.
 
 ## Prerequisites
@@ -48,7 +50,7 @@ The following example shows a request for a Teams Tenant with identifier `87d349
 PUT {endpoint}/access/teamsExtension/tenants/87d349ed-44d7-43e1-9a83-5f2406dee5bd/assignments/e5b7f628-ea94-4fdc-b3d9-1af1fe231111?api-version=2025-06-30
 
 {
-    "principalType" : "teamsResourceAccount",
+    "principalType" : "teamsResourceAccount"
 }
 ```
 
@@ -65,7 +67,7 @@ Content-type: application/json
 {
     "objectId": "e5b7f628-ea94-4fdc-b3d9-1af1fe231111",
     "tenantId": "87d349ed-44d7-43e1-9a83-5f2406dee5bd",
-    "principalType" : "teamsResourceAccount",
+    "principalType" : "teamsResourceAccount"
 }
 ```
 
@@ -94,7 +96,7 @@ GET {endpoint}/access/teamsExtension/assignments/e5b7f628-ea94-4fdc-b3d9-1af1fe2
 
 ## Receive and answer incoming calls
 
-### Setup and host your Azure DevTunnel
+### Set up and host your Azure DevTunnel
 
 DevTunnels create a persistent endpoint URL which allows anonymous access. We use this endpoint to notify your application of calling events from the Azure Communication Services Call Automation service.
 
@@ -113,37 +115,41 @@ app.MapPost("/api/incomingCall", async (
     [FromBody] EventGridEvent[] eventGridEvents,
     ILogger<Program> logger) =>
 {
-    if (eventGridEvent.TryGetSystemEventData(out object systemEvent))
+    foreach (var eventGridEvent in eventGridEvents)
     {
-        switch (systemEvent)
+        if (eventGridEvent.TryGetSystemEventData(out object systemEvent))
         {
-            case SubscriptionValidationEventData subscriptionValidated:
-               var responseData = new SubscriptionValidationResponse
-                {
-                    ValidationResponse = subscriptionValidationEventData.ValidationCode
-                };
-                return Results.Ok(responseData);
+            switch (systemEvent)
+            {
+                case SubscriptionValidationEventData subscriptionValidated:
+                    var responseData = new SubscriptionValidationResponse
+                    {
+                        ValidationResponse = subscriptionValidated.ValidationCode
+                    };
+                    return Results.Ok(responseData);
 
-            case AcsIncomingCallEventData incomingCall:
-                var callbackUri = new Uri(new Uri(devTunnelUri), $"/api/callbacks");
-                var options = new AnswerCallOptions(incomingCallContext, callbackUri);
+                case AcsIncomingCallEventData incomingCall:
+                    var incomingCallContext = incomingCall.IncomingCallContext;
+                    var callbackUri = new Uri(new Uri(devTunnelUri), $"/api/callbacks");
+                    var options = new AnswerCallOptions(incomingCallContext, callbackUri);
 
-                AnswerCallResult answerCallResult = await callAutomationClient.AnswerCallAsync(options);
-                logger.LogInformation($"Answered call for connection id: {answerCallResult.CallConnection.CallConnectionId}");
+                    AnswerCallResult answerCallResult = await callAutomationClient.AnswerCallAsync(options);
+                    logger.LogInformation($"Answered call for connection id: {answerCallResult.CallConnection.CallConnectionId}");
 
-                //Use EventProcessor to process CallConnected event
+                    //Use EventProcessor to process CallConnected event
 
-                var answerResult =  await answerCallResult.WaitForEventProcessorAsync();
-                if (answerResult.IsSuccess)
-                {
-                   logger.LogInformation($"Call connected event received for connection id: {answerResult.SuccessResult.CallConnectionId}");
-                   var callConnectionMedia = answerCallResult.CallConnection.GetCallMedia();
-                }
-                return Results.Ok();
+                    var answerResult = await answerCallResult.WaitForEventProcessorAsync();
+                    if (answerResult.IsSuccess)
+                    {
+                        logger.LogInformation($"Call connected event received for connection id: {answerResult.SuccessResult.CallConnectionId}");
+                        var callConnectionMedia = answerCallResult.CallConnection.GetCallMedia();
+                    }
+                    return Results.Ok();
 
-            default:
-                logger.LogInformation($"Received unexpected event of type {eventGridEvent.EventType}");
-                return Results.BadRequest();
+                default:
+                    logger.LogInformation($"Received unexpected event of type {eventGridEvent.EventType}");
+                    return Results.BadRequest();
+            }
         }
     }
     return Results.Ok();
@@ -181,7 +187,7 @@ app.MapPost("/api/incomingCall", async (
 ## Next steps
   
 > [!div class="nextstepaction"]
-> [REST API for Teams Phone extensibility](./teams-phone-extensiblity-rest-api.md)
+> [REST API for Teams Phone extensibility](./teams-phone-extensibility-rest-api.md)
 
 ## Related articles
 

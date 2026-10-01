@@ -3,11 +3,11 @@ title: Introduction to Azure VMware Solution Generation 2 Private Clouds
 description: Learn about Azure VMware Solution Gen 2 private clouds.
 ms.topic: overview
 ms.service: azure-vmware
-ms.date: 4/24/2026
+ms.date: 9/30/2026
 ms.custom:
   - engagement-fy25
   - build-2025
-ms.author: jacobjaygbay
+ms.author: apriladams
 # customer intent: As a cloud administrator, I want to learn about Azure VMware Solution Gen 2 private clouds so that I can understand the features and benefits of this offering.
 # Customer intent: As a cloud administrator, I want to understand the features and benefits of Azure VMware Solution Generation 2 private clouds so that I can make informed decisions about deploying and managing cost-effective, secure, and high-performance cloud architectures in Azure.
 ---
@@ -43,7 +43,7 @@ With the Azure VMware Solution Gen 2 private clouds offering, you get the follow
 
 ### Other features and capabilities unlocked 
 - Ability to select Private DNS resolution for your private cloud, enabling businesses to communicate across Azure and on-premises environments without being exposed to the internal.  
-- Ability to select which availability zone to deploy your private cloud in to minimize latency to on-premises environments. Availability zones are typically specified when a customer wants their private cloud to be geographically closest to their on-premises data center. If availability zone selection isn't required, no zone should be specified.
+- Ability to specify the Availability Zone in which the private cloud is deployed to optimize connectivity and latency with zonal Azure resources or ExpressRoute gateways within the same region. If no zonal alignment is required, the private cloud can be deployed without specifying an Availability Zone.
 
 ## Supported SKU type
 
@@ -55,25 +55,34 @@ Gen 2 private clouds are supported on the following SKU type:
 Gen 2 is available in the following Azure public regions. 
 
 - Australia East
+- Australia Southeast
+- Belgium Central
 - Brazil South
-
-- East US
 - Canada Central
 - Canada East
+- Central India
 - Central US
-- Malaysia West
+- Chile Central
+- East US
+- East US 2
 - France Central
-- North Europe
+- Germany West Central
+- Japan East
+- Malaysia West
+- New Zealand North
 - North Central US
-
+- North Europe
 - Norway East
 - Qatar Central
-
+- Southeast Asia
+- South Central US
+- Sweden Central
 - Switzerland North
 - Switzerland West
-
+- UK South
 - UK West
 - West US 2
+- West US 3
 
 There could be other regions that have Gen 2 available. To confirm coverage in other regions, contact your Microsoft account team or Microsoft Support.
 
